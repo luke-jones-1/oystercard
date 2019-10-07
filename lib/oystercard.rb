@@ -1,6 +1,6 @@
 class Oystercard
   attr_accessor :balance
-  CARD_LIMIT = 90
+  CARD_MAX_LIMIT = 90
 
   def initialize
     @balance = 0
@@ -14,4 +14,5 @@ class Oystercard
   def deduct(money)
     @balance -= money
   end
+
 end
