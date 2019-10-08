@@ -1,6 +1,7 @@
+require 'journey'
 
 class Oystercard
-  attr_accessor :balance, :in_journey, :stations
+  attr_accessor :balance, :in_journey, :stations, :starting_station, :journey
   CARD_MAX_LIMIT = 90
   CARD_MIN_LIMIT = 1
   MIN_FARE = 2
@@ -9,6 +10,7 @@ class Oystercard
     @balance = 0
     @in_journey = nil
     @stations = []
+    @journey = Journey.new
   end
 
   def top_up(money)
@@ -17,24 +19,30 @@ class Oystercard
   end
 
   def touch_in(station)
-    @starting_station = station
+    @journey.start(station)
   end
 
-  def touch_out(money = MIN_FARE, ending_station = "Bakerloo")
-    deduct(money)
-    @stations << {:starting_station => @starting_station, :ending_station => ending_station}
-    @starting_station = nil
+  def touch_out(station = "Bakerloo")
+    @journey.end(station)
+    deduct
+    journey_history
+    # journey_history(station)
+    # @starting_station = nil
   end
 
   def in_journey?
-    @in_journey = (@starting_station != nil)
+    @in_journey = !(@journey.complete?)
   end
 
   private
 
-  def deduct(money)
-    fail "insufficient funds £#{CARD_MIN_LIMIT}" if @balance - money < CARD_MIN_LIMIT
-    @balance -= money
+  def deduct
+    fail "insufficient funds £#{CARD_MIN_LIMIT}" if @balance - @journey.fare < CARD_MIN_LIMIT
+    @balance -= @journey.fare
+  end
+
+  def journey_history
+    @stations << journey
   end
 
 end
