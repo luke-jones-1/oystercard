@@ -48,7 +48,6 @@ describe Oystercard do
     it 'is active after touch in' do
       subject.touch_in("Charring Cross")
       expect(subject.in_journey?).to eq true
-      # expect(subject.starting_station).to include("Charring Cross")
     end
   end
 
@@ -62,7 +61,6 @@ describe Oystercard do
 
 
       expect {subject.touch_out}.to change{subject.balance}.by(-6)
-      # expect(subject.stations[0]).to include(:ending_station => "Bakerloo")
       expect(subject.in_journey?).to eq true
     end
   end

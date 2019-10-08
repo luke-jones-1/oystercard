@@ -8,7 +8,6 @@ class Oystercard
 
   def initialize
     @balance = 0
-    @in_journey = nil
     @stations = []
     @journey = Journey.new
   end
@@ -26,12 +25,11 @@ class Oystercard
     @journey.end(station)
     deduct
     journey_history
-    # journey_history(station)
-    # @starting_station = nil
+
   end
 
   def in_journey?
-    @in_journey = !(@journey.complete?)
+    !(@journey.complete?)
   end
 
   private
