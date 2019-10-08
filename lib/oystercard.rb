@@ -1,7 +1,7 @@
 require 'journey'
 
 class Oystercard
-  attr_accessor :balance, :in_journey, :stations, :starting_station, :journey
+  attr_accessor :balance, :stations, :starting_station, :journey
   CARD_MAX_LIMIT = 90
   CARD_MIN_LIMIT = 1
   MIN_FARE = 2
