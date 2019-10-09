@@ -2,8 +2,8 @@ require 'journey'
 
 describe Journey do
 
-  let(:start_station) {double :start_station}
-  let(:end_station) {double :end_station}
+  let(:start_station) {double :start_station, :zone => 1}
+  let(:end_station) {double :end_station, :zone => 4}
 
   it 'starts a journey' do
     subject.start(start_station)
@@ -17,6 +17,8 @@ describe Journey do
 
   it 'returns min fare' do
 
+    allow(end_station).to receive(:zone).and_return(1)
+
     subject.start(start_station)
     subject.finish(end_station)
 
@@ -29,6 +31,13 @@ describe Journey do
 
   it 'returns wether journey complete' do
     expect(subject.complete?).to eq false
+  end
+
+  it 'returns proper fair' do
+    subject.start(start_station)
+    subject.finish(end_station)
+
+    expect(subject.fare).to eq(4)
   end
 
 end

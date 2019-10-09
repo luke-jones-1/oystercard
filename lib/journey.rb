@@ -5,7 +5,7 @@ class Journey
   attr_reader :current_journey
 
 
-  MIN_FARE = 2
+  MIN_FARE = 1
   PENALTY_FARE = 6
 
 
@@ -23,7 +23,13 @@ class Journey
   end
 
   def fare
-    return MIN_FARE if complete?
+    if complete?
+      diff = @current_journey[:starting_station].zone - @current_journey[:ending_station].zone
+      if diff < 0
+        diff = (-1*diff)
+      end
+      return diff + MIN_FARE
+    end
     return PENALTY_FARE
   end
 
