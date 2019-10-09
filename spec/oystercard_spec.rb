@@ -28,11 +28,15 @@ describe Oystercard do
 
   describe '#deduct' do
 
+    let (:journey) {double :journey, complete?: true}
+    let (:journey_log) {double :journey_log, add_journey: journey}
+
     it 'raises an error when balance is below fare' do
       expect{subject.touch_out}.to raise_error "insufficient funds £#{Oystercard::CARD_MIN_LIMIT}"
     end
 
     it 'deducted from balance' do
+      allow(subject).to receive(:journey_history).and_return(true)
       subject.top_up(30)
       subject.touch_out
       expect(subject.balance).to eq(24)
@@ -56,7 +60,7 @@ describe Oystercard do
     it { is_expected.to respond_to(:touch_out) }
 
     it 'is inactive after touch out' do
-
+      allow(subject).to receive(:journey_history).and_return(true)
       subject.top_up(20)
 
 

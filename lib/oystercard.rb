@@ -1,15 +1,16 @@
 require 'journey'
+require 'journey_log'
 
 class Oystercard
-  attr_accessor :balance, :stations, :starting_station, :journey
+  attr_accessor :balance, :stations, :journey
   CARD_MAX_LIMIT = 90
   CARD_MIN_LIMIT = 1
-  MIN_FARE = 2
 
   def initialize
     @balance = 0
     @stations = []
     @journey = Journey.new
+    @journey_log = JourneyLog.new
   end
 
   def top_up(money)
@@ -22,10 +23,9 @@ class Oystercard
   end
 
   def touch_out(station = "Bakerloo")
-    @journey.end(station)
+    @journey.finish(station)
     deduct
     journey_history
-
   end
 
   def in_journey?
@@ -40,7 +40,7 @@ class Oystercard
   end
 
   def journey_history
-    @stations << journey
+    @journey_log.add_journey(@journey)
   end
 
 end

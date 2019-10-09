@@ -11,14 +11,14 @@ describe Journey do
   end
 
   it 'ends a jounery' do
-    subject.end(end_station)
+    subject.finish(end_station)
     expect(subject.current_journey).to include(:ending_station => end_station)
   end
 
   it 'returns min fare' do
 
     subject.start(start_station)
-    subject.end(end_station)
+    subject.finish(end_station)
 
     expect(subject.fare).to eq(Journey::MIN_FARE)
   end

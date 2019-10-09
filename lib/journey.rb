@@ -10,7 +10,7 @@ class Journey
 
 
 
-  def initialize
+  def initialize()
     @current_journey = {:starting_station => nil, :ending_station => nil}
   end
 
@@ -18,7 +18,7 @@ class Journey
     @current_journey[:starting_station] = start_station
   end
 
-  def end(end_station)
+  def finish(end_station)
     @current_journey[:ending_station] = end_station
   end
 
